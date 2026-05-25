@@ -37,7 +37,10 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
     "left hand batsman",
   ];
 
-  final List<String> bowlingStyles = ["right hand bowler", "left hand bowler"];
+  final List<String> bowlingStyles = [
+    "right hand bowler",
+    "left hand bowler",
+  ];
 
   Future<void> saveProfile() async {
     if (selectedPlayingRole == null) {
@@ -67,18 +70,16 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
     showMessage("Profile Saved Successfully");
 
     if (mounted) {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-        (route) => false,
+      Navigator.pushNamed(context, '/home',
+
       );
     }
   }
 
   void showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -233,7 +234,10 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
         ),
         hint: Text(hint, style: TextStyle(color: Colors.grey.shade500)),
         items: items.map((String item) {
-          return DropdownMenuItem<String>(value: item, child: Text(item));
+          return DropdownMenuItem<String>(
+            value: item,
+            child: Text(item),
+          );
         }).toList(),
         onChanged: onChanged,
       ),

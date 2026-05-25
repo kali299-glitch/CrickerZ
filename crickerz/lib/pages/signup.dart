@@ -1,4 +1,4 @@
-import 'package:crickerz/cricket_profile.dart';
+import 'package:crickerz/pages/cricket_profile.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
