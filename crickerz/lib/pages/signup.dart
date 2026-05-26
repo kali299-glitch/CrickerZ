@@ -479,26 +479,3 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 }
-
-// HOME PAGE
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xff1565C0),
-
-        title: const Text("Cricerz"),
-      ),
-
-      body: const Center(
-        child: Text(
-          "Welcome to Cricerz 🏏",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}

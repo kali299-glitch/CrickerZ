@@ -2,8 +2,9 @@ import 'package:crickerz/pages/challenge_team_page.dart';
 import 'package:crickerz/pages/cricket_profile.dart';
 import 'package:crickerz/pages/login.dart';
 import 'package:crickerz/pages/ongoing_matches.dart';
-import 'package:crickerz/pages/signup.dart' hide HomePage;
+import 'package:crickerz/pages/signup.dart';
 import 'package:crickerz/pages/start_match_page.dart';
+import 'package:crickerz/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),

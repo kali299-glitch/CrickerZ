@@ -1,3 +1,4 @@
+import 'package:crickerz/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -325,28 +326,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-// HOME PAGE
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Cricerz"),
-        backgroundColor: const Color(0xff1565C0),
-      ),
-
-      body: const Center(
-        child: Text(
-          "Welcome to Cricerz 🏏",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
     );
