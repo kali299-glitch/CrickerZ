@@ -1,12 +1,39 @@
 ﻿import 'package:crickerz/pages/challenge_team_page.dart';
+import 'package:crickerz/pages/cricket_profile.dart';
 import 'package:crickerz/pages/ongoing_matches.dart';
 import 'package:crickerz/pages/start_match_page.dart';
 import 'package:crickerz/widgets/action_button.dart';
 import 'package:crickerz/widgets/match_card.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 2;
+
+  final List<IconData> _navIcons = [
+    Icons.menu,
+    Icons.person_outline,
+    Icons.home_outlined,
+  ];
+
+  void _onNavTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const CricketProfilePage()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +44,7 @@ class HomePage extends StatelessWidget {
         elevation: 0,
         centerTitle: false,
         title: const Text(
-          'PLAY CRICKET',
+          'Crickerz',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -26,11 +53,11 @@ class HomePage extends StatelessWidget {
         ),
         actions: const [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
             child: Icon(Icons.chat_bubble_outline),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 16),
+            padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
             child: Icon(Icons.notifications_none),
           ),
         ],
@@ -211,15 +238,34 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.greenAccent,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
-        ],
+      bottomNavigationBar: Container(
+        color: Colors.greenAccent,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(_navIcons.length, (index) {
+            final isSelected = index == _selectedIndex;
+            return InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () => _onNavTap(index),
+              child: Container(
+                width: 54,
+                height: 54,
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Colors.white.withOpacity(0.25)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Icon(
+                  _navIcons[index],
+                  size: 28,
+                  color: isSelected ? Colors.black : Colors.black87,
+                ),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

@@ -12,6 +12,7 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
   String? selectedPlayingRole;
   String? selectedBattingStyle;
   String? selectedBowlingStyle;
+  ImageProvider? profileImage;
 
   bool isLoading = false;
 
@@ -105,6 +106,8 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
                 "Tell us more about your cricketing skills",
                 style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
               ),
+              const SizedBox(height: 24),
+              buildPhotoUploadSection(),
               const SizedBox(height: 35),
 
               // PLAYING ROLE
@@ -189,6 +192,65 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
         ),
       ),
     );
+  }
+
+  Widget buildPhotoUploadSection() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 42,
+            backgroundColor: Colors.grey.shade200,
+            backgroundImage: profileImage,
+            child: profileImage == null
+                ? const Icon(Icons.person, size: 46, color: Colors.grey)
+                : null,
+          ),
+          const SizedBox(height: 14),
+          const Text(
+            'Upload your profile photo',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'A profile photo makes it easier for other players to recognise you.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            onPressed: pickPhoto,
+            icon: const Icon(Icons.upload_file_outlined),
+            label: const Text('Upload Photo'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xff1565C0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void pickPhoto() {
+    showMessage('Upload photo option coming soon');
   }
 
   // LABEL
