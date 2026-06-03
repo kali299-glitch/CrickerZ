@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'signup.dart'; // To navigate to HomePage, assuming HomePage is there or can be extracted
+// To navigate to HomePage, assuming HomePage is there or can be extracted
 
 class CricketProfilePage extends StatefulWidget {
   const CricketProfilePage({super.key});

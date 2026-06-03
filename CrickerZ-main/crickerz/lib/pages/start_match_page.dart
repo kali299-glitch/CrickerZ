@@ -6,14 +6,9 @@ class StartMatchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Start Match"),
-      ),
+      appBar: AppBar(title: const Text("Start Match")),
       body: const Center(
-        child: Text(
-          "Start Match Page",
-          style: TextStyle(fontSize: 22),
-        ),
+        child: Text("Start Match Page", style: TextStyle(fontSize: 22)),
       ),
     );
   }

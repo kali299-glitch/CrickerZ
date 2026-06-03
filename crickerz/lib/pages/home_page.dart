@@ -212,15 +212,21 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.greenAccent,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
-        ],
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: BottomNavigationBar(
+          backgroundColor: Colors.greenAccent,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.black,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.menu), label: ''),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              label: '',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
+          ],
+        ),
       ),
     );
   }

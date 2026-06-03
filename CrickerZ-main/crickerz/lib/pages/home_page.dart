@@ -22,6 +22,8 @@ class _HomePageState extends State<HomePage> {
     Icons.home_outlined,
   ];
 
+  final List<String> _navLabels = ['Menu', 'Profile', 'Home'];
+
   void _onNavTap(int index) {
     setState(() {
       _selectedIndex = index;
@@ -38,234 +40,213 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: const Color(0xFFF4F6FA),
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: false,
         title: const Text(
           'Crickerz',
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 28,
             fontWeight: FontWeight.bold,
-            letterSpacing: 1,
+            color: Colors.black87,
           ),
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-            child: Icon(Icons.chat_bubble_outline),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.chat_bubble_outline, color: Colors.black54),
           ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
-            child: Icon(Icons.notifications_none),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_none, color: Colors.black54),
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-                child: Container(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(28),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF50C878), Color(0xFF7CE7A2)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withAlpha(13),
-                        blurRadius: 18,
-                        offset: const Offset(0, 8),
+                        color: Colors.green.shade700.withOpacity(0.16),
+                        blurRadius: 24,
+                        offset: const Offset(0, 14),
                       ),
                     ],
                   ),
-                  padding: const EdgeInsets.all(22),
+                  padding: const EdgeInsets.all(24),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
                         'Team Dashboard',
                         style: TextStyle(
-                          fontSize: 26,
+                          color: Colors.white,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 22),
+                      const SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
                           _DashboardStat(label: 'Matches', value: '12'),
                           _DashboardStat(label: 'Wins', value: '8'),
-                          _DashboardStat(label: 'Net RR', value: '+1.25'),
+                          _DashboardStat(label: 'Win %', value: '67%'),
                         ],
                       ),
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
+                const SizedBox(height: 24),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(28),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.04),
+                        blurRadius: 20,
+                        offset: const Offset(0, 12),
+                      ),
+                    ],
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Quick Actions',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'Choose a feature to start your game.',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ActionButton(
-                              title: 'Start Match',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const StartMatchPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(height: 16),
-                            ActionButton(
-                              title: 'Ongoing Matches',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const OngoingMatchesPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(height: 16),
-                            ActionButton(
-                              title: 'Challenge a Team',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const ChallengeTeamPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
-                      child: Text(
-                        'Recent Matches',
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Quick Actions',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: const [
-                          MatchCard(
-                            team1: 'Bad Boyz',
-                            score1: '125/7 (20.0 Ov)',
-                            team2: 'Believers',
-                            score2: '95/10 (20.0 Ov)',
-                            result: 'Bad Boyz won by 30 runs',
-                          ),
-                          SizedBox(height: 12),
-                          MatchCard(
-                            team1: 'TSK',
-                            score1: '125/7 (20.0 Ov)',
-                            team2: 'BDS',
-                            score2: '95/10 (20.0 Ov)',
-                            result: 'TSK won by 25 runs',
-                          ),
-                          SizedBox(height: 12),
-                          MatchCard(
-                            team1: 'TSK',
-                            score1: '125/7 (20.0 Ov)',
-                            team2: 'BDS',
-                            score2: '95/10 (20.0 Ov)',
-                            result: 'TSK won by 25 runs',
-                          ),
-                          SizedBox(height: 16),
-                        ],
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Navigate your match workflow with one tap.',
+                        style: TextStyle(fontSize: 14, color: Colors.black54),
+                      ),
+                      const SizedBox(height: 20),
+                      ActionButton(
+                        title: 'Start Match',
+                        icon: Icons.play_circle_fill,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const StartMatchPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 14),
+                      ActionButton(
+                        title: 'Ongoing Matches',
+                        icon: Icons.schedule,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const OngoingMatchesPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 14),
+                      ActionButton(
+                        title: 'Challenge a Team',
+                        icon: Icons.group,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const ChallengeTeamPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Recent Matches',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                    TextButton(onPressed: () {}, child: const Text('View All')),
                   ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 12),
+                const MatchCard(
+                  team1: 'Bad Boyz',
+                  score1: '125/7 (20.0 Ov)',
+                  team2: 'Believers',
+                  score2: '95/10 (20.0 Ov)',
+                  result: 'Bad Boyz won by 30 runs',
+                ),
+                const SizedBox(height: 14),
+                const MatchCard(
+                  team1: 'TSK',
+                  score1: '125/7 (20.0 Ov)',
+                  team2: 'BDS',
+                  score2: '95/10 (20.0 Ov)',
+                  result: 'TSK won by 25 runs',
+                ),
+                const SizedBox(height: 14),
+                const MatchCard(
+                  team1: 'TSK',
+                  score1: '125/7 (20.0 Ov)',
+                  team2: 'BDS',
+                  score2: '95/10 (20.0 Ov)',
+                  result: 'TSK won by 25 runs',
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        color: Colors.greenAccent,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(_navIcons.length, (index) {
-            final isSelected = index == _selectedIndex;
-            return InkWell(
-              borderRadius: BorderRadius.circular(16),
-              onTap: () => _onNavTap(index),
-              child: Container(
-                width: 54,
-                height: 54,
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? Colors.white.withOpacity(0.25)
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Icon(
-                  _navIcons[index],
-                  size: 28,
-                  color: isSelected ? Colors.black : Colors.black87,
-                ),
-              ),
-            );
-          }),
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onNavTap,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        elevation: 10,
+        selectedItemColor: Colors.green.shade800,
+        unselectedItemColor: Colors.black54,
+        showUnselectedLabels: true,
+        items: List.generate(_navIcons.length, (index) {
+          return BottomNavigationBarItem(
+            icon: Icon(_navIcons[index]),
+            label: _navLabels[index],
+          );
+        }),
       ),
     );
   }
@@ -281,22 +262,21 @@ class _DashboardStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
         margin: const EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
         decoration: BoxDecoration(
-          color: Colors.greenAccent.withAlpha(36),
+          color: Colors.white.withOpacity(0.9),
           borderRadius: BorderRadius.circular(18),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               value,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Text(
               label,
               textAlign: TextAlign.center,

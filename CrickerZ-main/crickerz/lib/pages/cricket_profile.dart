@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'signup.dart'; // To navigate to HomePage, assuming HomePage is there or can be extracted
+import 'package:image_picker/image_picker.dart';
+
+// To navigate to HomePage, assuming HomePage is there or can be extracted
 
 class CricketProfilePage extends StatefulWidget {
   const CricketProfilePage({super.key});
@@ -13,6 +17,7 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
   String? selectedBattingStyle;
   String? selectedBowlingStyle;
   ImageProvider? profileImage;
+  final ImagePicker _imagePicker = ImagePicker();
 
   bool isLoading = false;
 
@@ -47,10 +52,6 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
     }
     if (selectedBattingStyle == null) {
       showMessage("Please select your batting style");
-      return;
-    }
-    if (selectedBowlingStyle == null) {
-      showMessage("Please select your bowling style");
       return;
     }
 
@@ -141,9 +142,9 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
               const SizedBox(height: 20),
 
               // BOWLING STYLE
-              buildLabel("Bowling Style"),
+              buildLabel("Bowling Style (optional)"),
               buildDropdown(
-                hint: "Select bowling style",
+                hint: "Select bowling style (optional)",
                 value: selectedBowlingStyle,
                 items: bowlingStyles,
                 onChanged: (val) {
@@ -249,8 +250,23 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
     );
   }
 
-  void pickPhoto() {
-    showMessage('Upload photo option coming soon');
+  Future<void> pickPhoto() async {
+    try {
+      final XFile? pickedFile = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+        maxWidth: 800,
+      );
+      if (pickedFile != null) {
+        setState(() {
+          profileImage = FileImage(File(pickedFile.path));
+        });
+      } else {
+        showMessage('No photo selected');
+      }
+    } catch (e) {
+      showMessage('Unable to pick image. Please try again.');
+    }
   }
 
   // LABEL

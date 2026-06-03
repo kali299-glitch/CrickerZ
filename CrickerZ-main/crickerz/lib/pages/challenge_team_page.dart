@@ -6,14 +6,9 @@ class ChallengeTeamPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Challenge a Team"),
-      ),
+      appBar: AppBar(title: const Text("Challenge a Team")),
       body: const Center(
-        child: Text(
-          "Challenge Team Page",
-          style: TextStyle(fontSize: 22),
-        ),
+        child: Text("Challenge Team Page", style: TextStyle(fontSize: 22)),
       ),
     );
   }

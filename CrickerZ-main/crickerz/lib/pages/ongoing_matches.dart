@@ -6,14 +6,9 @@ class OngoingMatchesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Ongoing Matches"),
-      ),
+      appBar: AppBar(title: const Text("Ongoing Matches")),
       body: const Center(
-        child: Text(
-          "Ongoing Matches Page",
-          style: TextStyle(fontSize: 22),
-        ),
+        child: Text("Ongoing Matches Page", style: TextStyle(fontSize: 22)),
       ),
     );
   }
