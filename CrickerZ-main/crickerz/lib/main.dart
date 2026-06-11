@@ -6,8 +6,19 @@ import 'package:crickerz/pages/signup.dart';
 import 'package:crickerz/pages/start_match_page.dart';
 import 'package:crickerz/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
+  // Disable all debug features
+  //debugPrintBeginFrameBanner = false;
+  //debugPrintEndFrameBanner = false;
+  //debugPaintSizeEnabled = false;
+  //debugPaintBaselinesEnabled = false;
+  //debugPaintLayersEnabled = false;
+  debugPaintPointersEnabled = false;
+  debugRepaintRainbowEnabled = false;
+  debugHighlightDeprecatedWidgets = false;
+
   runApp(const MyApp());
 }
 
@@ -19,6 +30,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      debugShowMaterialGrid: false,
+      //debugShowSemanticsDebugger: false,
+      showPerformanceOverlay: false,
+      checkerboardRasterCacheImages: false,
+      checkerboardOffscreenLayers: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
