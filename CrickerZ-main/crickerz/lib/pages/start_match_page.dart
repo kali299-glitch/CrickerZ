@@ -116,10 +116,10 @@ class _StartMatchPageState extends State<StartMatchPage> {
                     _buildTeamCard(
                       context,
                       "Team A",
+                      selectedTeam: selectedTeamA,
                       isSelected: selectedTeamA != null,
                       onSelectTeam: () => _showTeamSelection(context, (team) {
                         setState(() => selectedTeamA = team);
-                        _navigateToNextPage(context, "Select Team A");
                       }),
                       onCreateTeam: () {
                         _navigateToNextPage(context, "Create Team");
@@ -133,10 +133,10 @@ class _StartMatchPageState extends State<StartMatchPage> {
                     _buildTeamCard(
                       context,
                       "Team B",
+                      selectedTeam: selectedTeamB,
                       isSelected: selectedTeamB != null,
                       onSelectTeam: () => _showTeamSelection(context, (team) {
                         setState(() => selectedTeamB = team);
-                        _navigateToNextPage(context, "Select Team B");
                       }),
                       showCreateButton: false,
                     ),
@@ -158,6 +158,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
   Widget _buildTeamCard(
     BuildContext context,
     String teamName, {
+    required String? selectedTeam,
     required VoidCallback onSelectTeam,
     VoidCallback? onCreateTeam,
     bool showCreateButton = true,
@@ -233,7 +234,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
                 elevation: 2,
               ),
               child: Text(
-                "Select $teamName",
+                selectedTeam ?? "Select $teamName",
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -402,7 +403,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF2E7D32),
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -411,7 +412,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
           child: const Text(
             "Start Match",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.white,
               letterSpacing: 0.5,
@@ -553,7 +554,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
                         : ListView.separated(
                             shrinkWrap: true,
                             itemCount: filteredTeams.length,
-                            separatorBuilder: (_, __) =>
+                            separatorBuilder: (_, _) =>
                                 const Divider(height: 1),
                             itemBuilder: (context, index) {
                               final teamName = filteredTeams[index];
@@ -692,19 +693,15 @@ class _StartMatchPageState extends State<StartMatchPage> {
   }
 
   void _navigateToNextPage(BuildContext context, String actionType) {
-    // Navigate to the next page based on action type
+    // Navigate to the next page based on action type.
+    // Only Create Team should immediately open a new page.
+    if (actionType != "Create Team") return;
+
     Future.delayed(const Duration(milliseconds: 500), () {
-      if (actionType == "Create Team") {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const CreateTeamPage()),
-        );
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const OngoingMatchesPage()),
-        );
-      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CreateTeamPage()),
+      );
     });
   }
 }

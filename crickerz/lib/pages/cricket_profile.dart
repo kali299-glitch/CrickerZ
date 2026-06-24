@@ -21,7 +21,6 @@ class _CricketProfilePageState extends State<CricketProfilePage> {
     "middle order batsman",
     "all rounder",
     "wicket keeper",
-    "finisher",
     "fast bowler",
     "fast medium bowler",
     "medium pace bowler",

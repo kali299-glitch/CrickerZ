@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'add_players_page.dart';
 
 class CreateTeamPage extends StatefulWidget {
   final String? initialTeamName;
@@ -11,20 +12,6 @@ class CreateTeamPage extends StatefulWidget {
 
 class _CreateTeamPageState extends State<CreateTeamPage> {
   late TextEditingController teamNameController;
-  final List<String> availablePlayers = [
-    "Virat Kohli",
-    "Rohit Sharma",
-    "MS Dhoni",
-    "Jasprit Bumrah",
-    "Hardik Pandya",
-    "KL Rahul",
-    "Rishabh Pant",
-    "Suryakumar Yadav",
-    "Axar Patel",
-    "Shreyas Iyer",
-  ];
-
-  List<String> selectedPlayers = [];
 
   @override
   void initState() {
@@ -181,63 +168,11 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                         ),
                       ),
                       const SizedBox(height: 28),
-                      // Players Section
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Select Players",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 6,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF66BB6A),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              "${selectedPlayers.length}/11",
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      // Players Grid
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 1.0,
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                            ),
-                        itemCount: availablePlayers.length,
-                        itemBuilder: (context, index) {
-                          final player = availablePlayers[index];
-                          final isSelected = selectedPlayers.contains(player);
-                          return _buildPlayerCard(player, isSelected);
-                        },
-                      ),
-                      const SizedBox(height: 32),
-                      // Create Button
+                      // Add Players Button
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: _createTeam,
+                          onPressed: _navigateToAddPlayers,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF2E7D32),
                             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -247,7 +182,7 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
                             elevation: 4,
                           ),
                           child: const Text(
-                            "Create Team",
+                            "Add Players",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -269,115 +204,10 @@ class _CreateTeamPageState extends State<CreateTeamPage> {
     );
   }
 
-  Widget _buildPlayerCard(String playerName, bool isSelected) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (isSelected) {
-            selectedPlayers.remove(playerName);
-          } else if (selectedPlayers.length < 11) {
-            selectedPlayers.add(playerName);
-          }
-        });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF66BB6A) : Colors.white,
-          border: Border.all(
-            color: isSelected ? const Color(0xFF2E7D32) : Colors.grey[300]!,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(isSelected ? 0.15 : 0.05),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isSelected
-                    ? Colors.white.withOpacity(0.3)
-                    : Colors.grey[200],
-              ),
-              child: Icon(
-                Icons.person,
-                size: 28,
-                color: isSelected ? Colors.white : Colors.grey[600],
-              ),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                playerName,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: isSelected ? Colors.white : Colors.black87,
-                ),
-              ),
-            ),
-            if (isSelected)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Icon(
-                  Icons.check_circle,
-                  size: 16,
-                  color: Colors.white.withOpacity(0.9),
-                ),
-              ),
-          ],
-        ),
-      ),
+  void _navigateToAddPlayers() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AddPlayersPage()),
     );
-  }
-
-  void _createTeam() {
-    if (teamNameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter a team name"),
-          duration: Duration(milliseconds: 1500),
-        ),
-      );
-      return;
-    }
-
-    if (selectedPlayers.length < 11) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please select 11 players"),
-          duration: Duration(milliseconds: 1500),
-        ),
-      );
-      return;
-    }
-
-    // Show success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          "Team '${teamNameController.text}' created successfully!",
-        ),
-        duration: const Duration(milliseconds: 1500),
-      ),
-    );
-
-    // Navigate back after a short delay
-    Future.delayed(const Duration(milliseconds: 800), () {
-      Navigator.pop(context);
-    });
   }
 }
