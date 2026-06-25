@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ongoing_matches.dart';
+import 'add_squad_page.dart';
 import 'create_team_page.dart';
 
 class StartMatchPage extends StatefulWidget {
@@ -12,6 +12,8 @@ class StartMatchPage extends StatefulWidget {
 class _StartMatchPageState extends State<StartMatchPage> {
   String? selectedTeamA;
   String? selectedTeamB;
+  List<Player> selectedTeamASquad = [];
+  List<Player> selectedTeamBSquad = [];
 
   @override
   Widget build(BuildContext context) {
@@ -118,9 +120,8 @@ class _StartMatchPageState extends State<StartMatchPage> {
                       "Team A",
                       selectedTeam: selectedTeamA,
                       isSelected: selectedTeamA != null,
-                      onSelectTeam: () => _showTeamSelection(context, (team) {
-                        setState(() => selectedTeamA = team);
-                      }),
+                      squadCount: selectedTeamASquad.length,
+                      onSelectTeam: () => _showTeamSelection(context, true),
                       onCreateTeam: () {
                         _navigateToNextPage(context, "Create Team");
                       },
@@ -135,14 +136,16 @@ class _StartMatchPageState extends State<StartMatchPage> {
                       "Team B",
                       selectedTeam: selectedTeamB,
                       isSelected: selectedTeamB != null,
-                      onSelectTeam: () => _showTeamSelection(context, (team) {
-                        setState(() => selectedTeamB = team);
-                      }),
+                      squadCount: selectedTeamBSquad.length,
+                      onSelectTeam: () => _showTeamSelection(context, false),
                       showCreateButton: false,
                     ),
                     const SizedBox(height: 32),
                     // Start Match Button
-                    if (selectedTeamA != null && selectedTeamB != null)
+                    if (selectedTeamA != null &&
+                        selectedTeamB != null &&
+                        selectedTeamASquad.length >= 11 &&
+                        selectedTeamBSquad.length >= 11)
                       _buildStartButton(context),
                     const SizedBox(height: 24),
                   ],
@@ -159,6 +162,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
     BuildContext context,
     String teamName, {
     required String? selectedTeam,
+    required int squadCount,
     required VoidCallback onSelectTeam,
     VoidCallback? onCreateTeam,
     bool showCreateButton = true,
@@ -243,6 +247,20 @@ class _StartMatchPageState extends State<StartMatchPage> {
               ),
             ),
           ),
+          if (selectedTeam != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                squadCount == 1
+                    ? '1 Player Selected'
+                    : '$squadCount Players Selected',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
           // Create Team Button (only for Team A)
           if (showCreateButton) ...[
             const SizedBox(height: 16),
@@ -423,10 +441,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
     );
   }
 
-  void _showTeamSelection(
-    BuildContext context,
-    Function(String) onTeamSelected,
-  ) {
+  void _showTeamSelection(BuildContext context, bool isTeamA) {
     final List<String> teams = [
       "Team Lions",
       "Team Tigers",
@@ -561,8 +576,46 @@ class _StartMatchPageState extends State<StartMatchPage> {
                               return _buildTeamOption(context, teamName, (
                                 team,
                               ) {
-                                onTeamSelected(team);
+                                final previousTeam = isTeamA
+                                    ? selectedTeamA
+                                    : selectedTeamB;
+                                this.setState(() {
+                                  if (isTeamA) {
+                                    if (team != previousTeam) {
+                                      selectedTeamASquad = [];
+                                    }
+                                    selectedTeamA = team;
+                                  } else {
+                                    if (team != previousTeam) {
+                                      selectedTeamBSquad = [];
+                                    }
+                                    selectedTeamB = team;
+                                  }
+                                });
                                 Navigator.pop(context);
+                                Future.microtask(() async {
+                                  final selectedPlayers =
+                                      await Navigator.push<List<Player>>(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AddSquadPage(
+                                            teamName: team,
+                                            initialSelection: isTeamA
+                                                ? selectedTeamASquad
+                                                : selectedTeamBSquad,
+                                          ),
+                                        ),
+                                      );
+                                  if (selectedPlayers != null) {
+                                    setState(() {
+                                      if (isTeamA) {
+                                        selectedTeamASquad = selectedPlayers;
+                                      } else {
+                                        selectedTeamBSquad = selectedPlayers;
+                                      }
+                                    });
+                                  }
+                                });
                               });
                             },
                           ),
