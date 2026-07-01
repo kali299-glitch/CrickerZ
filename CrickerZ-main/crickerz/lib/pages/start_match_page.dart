@@ -607,7 +607,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
                                         ),
                                       );
                                   if (selectedPlayers != null) {
-                                    setState(() {
+                                    this.setState(() {
                                       if (isTeamA) {
                                         selectedTeamASquad = selectedPlayers;
                                       } else {

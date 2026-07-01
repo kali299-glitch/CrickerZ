@@ -10,11 +10,13 @@ class Player {
 class AddSquadPage extends StatefulWidget {
   final String teamName;
   final List<Player> initialSelection;
+  final bool isTeamA;
 
   const AddSquadPage({
     super.key,
     required this.teamName,
     required this.initialSelection,
+    required this.isTeamA,
   });
 
   @override
@@ -65,9 +67,7 @@ class _AddSquadPageState extends State<AddSquadPage> {
   void initState() {
     super.initState();
     selectedPlayers = List<Player>.from(widget.initialSelection);
-    availablePlayers = widget.teamName == 'Team B'
-        ? teamBPlayers
-        : teamAPlayers;
+    availablePlayers = widget.isTeamA ? teamAPlayers : teamBPlayers;
   }
 
   bool _isSelected(Player player) {
@@ -168,7 +168,7 @@ class _AddSquadPageState extends State<AddSquadPage> {
               Expanded(
                 child: ListView.separated(
                   itemCount: availablePlayers.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  separatorBuilder: (_, _) => const Divider(height: 1),
                   itemBuilder: (context, index) {
                     final player = availablePlayers[index];
                     final selected = _isSelected(player);
@@ -220,7 +220,7 @@ class _AddSquadPageState extends State<AddSquadPage> {
                   ),
                   child: Text(
                     selectedCount >= 11
-                        ? 'Save Squad (${selectedCount})'
+                        ? 'Save Squad ($selectedCount)'
                         : 'Select 11 players to continue',
                     style: TextStyle(
                       fontSize: 16,
