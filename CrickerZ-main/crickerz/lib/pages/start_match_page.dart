@@ -600,6 +600,7 @@ class _StartMatchPageState extends State<StartMatchPage> {
                                         MaterialPageRoute(
                                           builder: (context) => AddSquadPage(
                                             teamName: team,
+                                            isTeamA: isTeamA,
                                             initialSelection: isTeamA
                                                 ? selectedTeamASquad
                                                 : selectedTeamBSquad,
