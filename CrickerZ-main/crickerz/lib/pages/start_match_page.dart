@@ -144,8 +144,8 @@ class _StartMatchPageState extends State<StartMatchPage> {
                     // Start Match Button
                     if (selectedTeamA != null &&
                         selectedTeamB != null &&
-                        selectedTeamASquad.length >= 11 &&
-                        selectedTeamBSquad.length >= 11)
+                        selectedTeamASquad.isNotEmpty &&
+                        selectedTeamBSquad.isNotEmpty)
                       _buildStartButton(context),
                     const SizedBox(height: 24),
                   ],

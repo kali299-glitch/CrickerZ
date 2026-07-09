@@ -107,7 +107,7 @@ class _AddSquadPageState extends State<AddSquadPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Choose at least 11 players from the list below for ${widget.teamName}.',
+                'Choose players from the list below for ${widget.teamName}.',
                 style: TextStyle(fontSize: 14, color: Colors.grey[700]),
               ),
               const SizedBox(height: 20),
@@ -130,7 +130,7 @@ class _AddSquadPageState extends State<AddSquadPage> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            '$selectedCount / 11',
+                            '$selectedCount',
                             style: const TextStyle(fontSize: 18),
                           ),
                         ],
@@ -205,7 +205,7 @@ class _AddSquadPageState extends State<AddSquadPage> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: selectedCount >= 11
+                  onPressed: selectedCount >= 1
                       ? () {
                           Navigator.pop(context, selectedPlayers);
                         }
@@ -219,12 +219,12 @@ class _AddSquadPageState extends State<AddSquadPage> {
                     ),
                   ),
                   child: Text(
-                    selectedCount >= 11
+                    selectedCount >= 1
                         ? 'Save Squad ($selectedCount)'
-                        : 'Select 11 players to continue',
+                        : 'Select players to continue',
                     style: TextStyle(
                       fontSize: 16,
-                      color: selectedCount >= 11
+                      color: selectedCount >= 1
                           ? Colors.white
                           : Colors.grey[700],
                       fontWeight: FontWeight.w600,
